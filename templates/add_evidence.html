@@ -1,0 +1,19 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<br>
+<div class="jumbotron">
+   <div class="container">
+     <h1 class="display-3">Upload Evidence</h1>
+      
+     {% from "includes/_formhelpers.html" import render_field %}
+     
+     <form class="formz" action="" method=post enctype=multipart/form-data>
+      <input type=file name='file'>
+      <input type="submit" class="btn btn-primary" value="Upload">
+    </form>
+    
+   </div>
+ </div>
+
+{% endblock %}

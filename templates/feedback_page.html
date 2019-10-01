@@ -1,0 +1,35 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<br>
+<div class="jumbotron">
+   <div class="container">
+     <h1 class="display-topright">Feedback From:</h1>
+     <p>{{feedback.fbAuthor}} on {{feedback.create_date}}</p>
+     <hr>
+     <div>
+
+      <h5>First Name</h5>
+      <p class="text-justify">{{feedback.fbFirstName | safe}}</p>
+      
+      <h5>Last Name</h5>
+      <p class="text-justify">{{feedback.fbLastName | safe}}</p>
+      
+      <h5>Feedback Type</h5>
+      {% if feedback.fbType == 'fbComment'  | safe%}
+      <p>Comments</p>
+      {% elif feedback.fbType == 'fbBugReports'  | safe%}
+      <p>Bug Reports</p>
+      {% elif feedback.fbType == 'fbQuestions' | safe %}
+      <p>Questions</p>
+      {% endif%}
+      
+      <h5>Feedback Description</h5>
+      <p class="text-justify">{{feedback.fbContent | safe}}</p>
+      <hr>
+      <a href="/reportList" class="btn btn-primary"><i class="material-icons">arrow_back</i></a>
+
+    </div>
+   </div>
+ </div>
+{% endblock %}

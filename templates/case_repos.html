@@ -1,0 +1,18 @@
+{% extends 'layout.html' %}
+
+
+{% block body %}
+<br>
+<div class="jumbotron">
+   <div class="container">
+    <h4 class="display-4">Welcome {{session.name}}!</h4>
+     <p>This is case you need to sign</p>
+     <ul class="list-group">
+       {% for  case in cases %}
+         <li class ="list-group-item"> <a href="/displayPage/{{case.title}}">{{case.title}}</a></li>
+       {% endfor %}
+     </ul>
+
+   </div>
+</div>
+{% endblock %}

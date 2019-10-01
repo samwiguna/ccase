@@ -1,0 +1,48 @@
+<head>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-alpha.2/js/materialize.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-alpha.2/css/materialize.min.css">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/body.css') }}">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+
+  <title>{{ title }} - Digital Evidence Management</title>
+  <script type="text/javascript">
+// For the DataPicker utility from MaterializeCSS :)
+  $(document).ready(function(){
+    $('.datepicker').datepicker({
+      container: 'body'
+    });
+  });
+  $(document).ready(function(){
+    $('select').select();
+  });
+  $(document).ready(function(){
+    $('modal').modal();
+  });
+  </script>
+
+<style>
+  nav{
+  
+    background-color: #5068c2;
+  }
+  li:hover{
+  
+    
+    color : #5068c2;
+  }
+  
+  </style>
+
+</head>
+<nav>
+  <div class="our-colour">
+    <a href="/" class="brand-logo"><i class="material-icons md-48">&nbsp;&nbsp;&nbsp;vpn_lock</i>Digital Evidence Management</a>
+    <ul  class="right high-on-med-and-down">
+      <li><a href="/DFL">Digital Forensic Lab</a></li>
+      <li><a href="/witness">Witness</a></li>
+      <li><a href="/prosecutor">Prosecutor</a></li>
+      <li><a href="/judge">Judge</a></li>
+    </ul>
+  </div>
+</nav>

@@ -1,0 +1,40 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<br>
+    <h1 class="display-3">Feedback List</h1>
+    <p>This is feedback from our client.</p>
+     <hr>
+     <table class = "table table-hover">
+        <thead class="thead-dark">
+          <tr>
+            <th>First Name</th>
+            <th>Last Name</th>
+            <th>Feedback Type</th>
+            <th>Date</th>
+            <th></th>
+          </tr>
+        </thead>
+       {% for feedback in feedbacks %}
+         <tr>
+           <td>{{feedback.fbFirstName}}</td>
+           <td>{{feedback.fbLastName}}</td>
+           <td>
+             {% if feedback.fbType == 'fbComment' %}
+             <p>Comments</p>
+             {% elif feedback.fbType == 'fbBugReports' %}
+             <p>Bug Reports</p>
+             {% elif feedback.fbType == 'fbQuestions' %}
+             <p>Questions</p>
+             {% endif%}
+           </td>
+           <td>{{feedback.create_date}}</td>
+           <td>
+              <a class="btn btn-success" href="/feedbackPage/{{feedback.fbAuthor}}"><i class="material-icons">pageview</i></a>              
+           </td>
+         </tr>
+
+       {% endfor %}
+     </table>
+   
+{% endblock %}

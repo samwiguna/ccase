@@ -1,0 +1,27 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<br>
+<div class="jumbotron">
+  <div class="container text-center">
+
+       <h4>Digital Evidence Management</h4>
+       <i>"The other side shall be heard as well."</i>
+       <p>-Seneca</p>
+
+       {% if session.logged_in == NULL %}
+        <a href="/login" class="btn btn-primary btn-lg">Login</a>
+       {% elif  session.logged_in != NULL %}
+          {% if session.role == '2' %}
+          <a href="/caseList" class="btn btn-success btn-lg">Case you need to sign</a>
+          {% elif session.role == '3' %}
+          <a href="/caseList" class="btn btn-success btn-lg">Case list</a>
+          {% elif session.role == '4' %}
+          <a href="/caseList" class="btn btn-success btn-lg">Case list</a>
+          {% endif %}
+       {% endif %}
+       
+
+  </div>
+</div>
+{% endblock %}

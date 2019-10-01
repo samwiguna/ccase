@@ -1,0 +1,42 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<br>
+<div class="jumbotron">
+   <div class="container">
+     <h1 class="display-3">Feedback Form</h1>
+     <p>We would love to hear your thoughts, concerns or problems with anything so we can improve!</p>
+
+     {% from "includes/_formhelpers.html" import render_field %}
+
+     <form method="POST">
+
+       <div class = "form-group">
+         {{render_field(form.fbFirstName, class_= "form-control")}}
+       </div>
+
+       <div class = "form-group">
+         {{render_field(form.fbLastName, class_= "form-control")}}
+       </div>
+
+       <div class = "form-group">
+         {{render_field(form.fbEmail, class_= "form-control")}}
+       </div>
+
+       <div class = "form-group">
+         {{render_field(form.fbType, class_= "form-control")}}
+       </div>
+       
+       <div class = "form-group">
+         {{render_field(form.fbContent, class_= "form-control", id="editor")}}
+       </div>
+
+       <input type="submit" class="btn btn-primary" value="Submit">
+
+     </form>
+
+   </div>
+
+ </div>
+
+{% endblock %}

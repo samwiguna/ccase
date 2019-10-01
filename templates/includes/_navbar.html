@@ -1,0 +1,58 @@
+<head>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-alpha.2/js/materialize.min.js"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0-alpha.2/css/materialize.min.css">
+  <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/body.css') }}">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <link rel="stylesheet" href="../static/js/jquery.js">
+  <title>{{ title }} - Digital Evidence Management</title>
+  <script type="text/javascript">
+
+//For the DataPicker utility from MaterializeCSS
+  $(document).ready(function(){
+    $('.datepicker').datepicker({
+      container: 'body'
+    });
+  });
+  $(document).ready(function(){
+    $('select').select();
+  });
+  $(document).ready(function(){
+    $('modal').modal();
+  });
+  </script>
+
+<style>
+nav{
+
+  background-color: #5068c2;
+}
+.tex:hover{
+
+  background-color: #275cb2;
+  color: white;
+
+}
+
+</style>
+
+</head>
+  <nav>
+    <div class=" our-colour">
+    <a href="/" class="brand-logo"> <i class="material-icons md-48">&nbsp;&nbsp;&nbsp;vpn_lock</i> Digital Evidence Management</a>
+      <ul  class="right hide-on-med-and-down">
+        
+        {% if session.logged_in %}
+          {% if session.role == '1' %}
+          <li>  <a class="tex" href="/reportList">Report</a> </li>
+          <li>  <a class="tex" href="/dashboard">Dashboard</a> </li>
+          <li>  <a class="tex" href="/logout">Logout</a> </li>
+          {% else %}
+          <li>  <a class="tex" href="/feedback">Feedback</a> </li>
+          <li>  <a class="tex" href="/logout">Logout</a> </li>
+          {% endif %}
+        {% endif %}
+
+      </ul>
+    </div>
+  </nav>

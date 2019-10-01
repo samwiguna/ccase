@@ -1,0 +1,7 @@
+create table cases (casesid int not null auto_increment primary key, caseID varchar(20) not null unique key, title varchar(50), author varchar(50), witness varchar(50), content text, timestamp varchar(30), date varchar(30), create_date timestamp, caseStatus varchar(255))
+
+create table users (userid int not null primary key auto_increment, casesid int not null, name varchar(50), username varchar(20), password varchar(100), role varchar(20), email varchar(50), register_date timestamp, foreign key (casesid) references cases (casesid) ON UPDATE CASCADE ON DELETE CASCADE)
+
+create table evidences (evidenceid int not null primary key auto_increment, casesid int not null, evidencename varchar(20), evidencetype varchar(20), evidencetimestamp varchar(20), evidencedate varchar(20), evidencelocation varchar(255), evidencestatus varchar(2), foreign key (casesid) references cases (casesid) ON UPDATE CASCADE ON DELETE CASCADE)
+
+create table feedbacks (fbID int not null auto_increment primary key, fbAuthor varchar(100),  fbFirstName varchar(100), fbLastName varchar(50), fbEmail varchar(50), fbType varchar(50) , fbContent varchar(30), create_date timestamp)

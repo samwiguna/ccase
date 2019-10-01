@@ -1,0 +1,171 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<br>
+<div class="jumbotron">
+  <div class="container">
+    <h1 class="display-topright">{{dcase.title}}</h1>
+
+    <table class='table'>
+      <th><small>Written by {{dcase.author}} on {{dcase.create_date}}</small></th>
+      <th>
+        {% if dcase.caseStatus == '1' %}
+        <p>
+          <font color="red">Waiting for Witness approval</font>
+        </p>
+        {% elif dcase.caseStatus == '2' %}
+        <p>
+          <font color="yellow">Waiting for Prosecutor approval</font>
+        </p>
+        {% elif dcase.caseStatus == '3' %}
+        <p>
+          <font color="blue">Waiting for Judge approval</font>
+        </p>
+        {% elif dcase.caseStatus == '4' %}
+        <p>
+          <font color="green">This case has been on trial</font>
+        </p>
+        {% elif dcase.caseStatus == '5' %}
+        <p>
+          <font color="purple">This case has been added to blockchain</font>
+        </p>
+        {% endif%}
+      </th>
+    </table>
+    <div>
+      <h5>Case ID</h5>
+      <p class="text-justify">{{dcase.caseID | safe}}</p>
+      <h5>Witness</h5>
+      <p class="text-justify">{{dcase.witness | safe}}</p>
+      <h5>Content</h5>
+      <p class="text-justify">{{dcase.content | safe}}</p>
+      <h5>Timestamp</h5>
+      <p class="text-justify">{{dcase.timestamp | safe}}</p>
+      <h5>Date</h5>
+      <p class="text-justify">{{dcase.date | safe}}</p>
+
+      {% if dcase.caseStatus != '5' and session.role == '1' %}
+      <a href="/edit_case/{{dcase.casesid}}" class="btn btn-primary btn-sm"><i class="material-icons">create</i></a>
+      {% endif %}
+      <br><br><br>
+    </div>
+
+
+    <h5 class="display-5">People</h5>
+
+    <table class="table table-hover table-striped">
+      <tr>
+        <th>Name</th>
+        <th>Role</th>
+        <th>Uname</th>
+        <th>Email</th>
+        <th></th>
+        <th></th>
+      </tr>
+      {% for duser  in dpeople %}
+
+      <tr>
+        <td>{{duser.name | safe}}</td>
+        <td>
+
+          {% if duser.role == '1' %}
+          <p>Police</p>
+          {% elif duser.role == '2' %}
+          <p>Witness</p>
+          {% elif duser.role == '3' %}
+          <p>Prosecutor</p>
+          {% elif duser.role == '4' %}
+          <p>Judge</p>
+          {% endif%}
+
+
+        </td>
+        <td>{{duser.username | safe}}</td>
+        <td>{{duser.email | safe}}</td>
+        <td></td>
+        <td>
+          {% if dcase.caseStatus != '5' and session.role == '1' %}
+          <form action="{{url_for('delete_users', username=duser.username)}}" method="post">
+            <input type="hidden" name="_method" value="DELETE">
+            <input type="submit" value="DELETE" class="btn btn-danger">
+          </form>
+          {% endif %}
+        </td>
+
+      </tr>
+
+      {% endfor %}
+    </table>
+    {% if dcase.caseStatus != '5' and session.role == '1' %}
+    <a class="btn btn-success" href="/register"><i class="material-icons">add_circle</i></a>
+    {% endif %}
+
+    <br><br><br>
+
+    <h5 class="display-5">Evidences</h5>
+
+    <table class="table table-hover table-striped">
+      <tr>
+        <th>Name</th>
+        <th>Type</th>
+        <th>Timestamp</th>
+        <th>Date</th>
+        <th>Checksum (SHA-256)</th>
+        <th></th>
+        {% if dcase.caseStatus == '5' and session.role == '1' %}
+        <th></th>
+        {% endif %}
+      </tr>
+      {% for case in cases %}
+
+      <tr>
+        <td>{{case.evidencename | safe}}</td>
+        <td>{{case.evidencetype | safe}}</td>
+        <td>{{case.evidencetimestamp | safe}}</td>
+        <td>{{case.evidencedate | safe}}</td>
+        <td>{{case.evidenceHash | safe}}</td>
+        <td><a href="/uploads/{{case.evidencelocation}}" class="btn btn-primary btn-sm"><i
+              class="material-icons">archive</i></a></td>
+        {% if dcase.caseStatus == '5' and session.role == '1' %}
+        {% if case.evidencestatus == '0' %}
+        <td><a class="btn btn-success" href="/submitEvidenceComposer/{{case.evidenceid}}" method="POST"><i
+              class="material-icons">send</i></a></td>
+        {% else %}
+        <td></td>
+        {% endif %}
+        {% endif %}
+      </tr>
+
+      {% endfor %}
+    </table>
+    {% if dcase.caseStatus != '5' and session.role == '1' %}
+    <a class="btn btn-success" href="/add_evidenceDB"><i class="material-icons">add_circle</i></a>
+    {% endif %}
+
+    <br><br><br>
+
+
+    {% if dcase.caseStatus == '1' and session.role == '2' %}
+    <i> By clicking "I Agree", You are agreeing the truth about Case and its Evidence. You also agreeing to help the
+      Judge as Witness in the Court.<br><br></i>
+    <a href="/approval" class="btn btn-primary btn-sm">I Agree</a>
+    {% elif dcase.caseStatus == '2' and session.role == '3' %}
+    <i> By clicking "I Agree", You are agreeing the truth about Case and its Evidence. You also agreeing to help the
+      Judge as Prosecutor in the Court.<br><br></i>
+    <a href="/approval" class="btn btn-primary btn-sm">I Agree</a>
+    {% elif dcase.caseStatus == '3' and session.role == '4' %}
+    <i> By clicking "I Agree", You are agreeing the truth about Case and its Evidence.<br><br></i>
+    <a href="/approval" class="btn btn-primary btn-sm">I Agree</a>
+    {% endif %}
+    {% if dcase.caseStatus == '4' and session.role == '1' %}
+    <a class="btn btn-success" href="/dashboard"><i class="material-icons">arrow_back</i></a>
+    <a class="btn btn-success" href="/submitCaseComposer/{{dcase.casesid}}" method="POST">Add to Blockchain</a>
+    {% elif session.role == '1' %}
+    <a class="btn btn-success" href="/dashboard"><i class="material-icons">arrow_back</i></a>
+    {% elif session.role != '1' %}
+    <a href="/caseList" class="btn btn-primary"><i class="material-icons">arrow_back</i></a>
+    {% endif %}
+
+  </div>
+</div>
+{% endblock %}

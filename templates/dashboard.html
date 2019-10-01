@@ -1,0 +1,55 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<br>
+    <h1 class="display-3">Welcome {{session.name}}!</h1>
+    <a class="btn btn-success" href="/add_case"><i class="material-icons">add_circle</i></a>
+     <hr>
+
+     <table class = "table table-striped">
+       <tr>
+         <th>ID</th>
+         <th>Title</th>
+         <th>Author</th>
+         <th>Date</th>
+         <th>Status</th>
+         <th></th>
+         <th></th>
+       </tr>
+       {% for case in cases %}
+
+         <tr>
+           <td>{{case.caseID}}</td>
+           <td>{{case.title}}</td>
+           <td>{{case.author}}</td>
+           <td>{{case.create_date}}</td>
+           <td>{% if case.caseStatus == '1' %}
+              <p>Created by Police</p>
+              {% elif case.caseStatus == '2' %}
+              <p>Approved by Witness</p>
+              {% elif case.caseStatus == '3' %}
+              <p>Approved by Prosecutor</p>
+              {% elif case.caseStatus == '4' %}
+              <p>Trialed</p>
+              {% elif case.caseStatus == '5' %}
+              <p>Added to BC</p>
+              {% endif%}</td>
+           <td>
+             <form action="{{url_for('delete_case', casesid=case.casesid)}}" method="post">
+              <input type="hidden" name="_method" value="DELETE"> 
+              <input type="submit"  value="DELETE" class= "btn btn-danger">
+             </form>
+           </td>
+           <td>
+              {% if case.caseStatus == '4' %}
+              <a class="btn btn-success" href="/displayPage/{{case.title}}"><i class="material-icons">send</i></a>
+              {% else %}
+              <a class="btn btn-success" href="/displayPage/{{case.title}}"><i class="material-icons">pageview</i></a>
+              {% endif%}
+           </td>
+         </tr>
+
+       {% endfor %}
+     </table>
+   
+{% endblock %}

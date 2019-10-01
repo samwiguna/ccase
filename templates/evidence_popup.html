@@ -1,0 +1,34 @@
+{% extends 'layout.html' %}
+
+{% block body %}
+<br>
+    <p>Evidence Details</p>
+     <hr>
+    <small>
+      <table class = "table">
+       <tr>
+         <th>Name</th>
+         <th>Type</th>
+         <th>Timestamp</th>
+         <th>Date</th>
+        </tr>
+        
+        <tr>
+          <td>{{evidence.evidencename}}</td>
+          <td>
+            {% if evidence.evidencetype == 'images' %}
+            <p>Images</p>
+            {% elif evidence.evidencetype == 'doc_docx' %}
+            <p>Document</p>
+            {% elif evidence.evidencetype == 'doc_pdf' %}
+            <p>PDF</p>
+            {% elif evidence.evidencetype == 'doc_txt' %}
+            <p>Text</p>
+            {% endif%}
+          </td>
+          <td>{{evidence.evidencetimestamp | safe}}</td>
+          <td>{{evidence.evidencedate | safe}}</td>
+        </tr>
+      </table>
+    </small>
+{% endblock %}
